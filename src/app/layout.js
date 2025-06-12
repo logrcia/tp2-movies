@@ -23,6 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ backgroundImage: "url('/assets/bg_gradient.png')" }}
       >
         <Navbar />
         {children}
