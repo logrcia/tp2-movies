@@ -3,11 +3,12 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import MovieDetails from "./MovieDetails"
 import Link from "next/link"
+import { useAppContext } from "@/app/contexts/AppContext";
 
 const MovieContainer = ({id}) => {
 
   const [movie, setMovie] = useState({}) //uso llaves xq movie es un objeto, no un array
-
+const {handleAddToFavorites} = useAppContext()
   useEffect(() => {
     const getData = async () => {
       try{
@@ -38,6 +39,11 @@ const MovieContainer = ({id}) => {
 
         <Link href={"/"} className="p-4 bg-stone-50 text-stone-950 font-bold rounded-2xl">Back to home</Link>
       
+      <button className="cursor-pointer"
+      onClick={() => { 
+        handleAddToFavorites(movie.title, movie.image, movie.id)}}
+      >Add to favorites</button>
+
         <p className="text-base font-normal mt-[80px]">{formattedDate}</p>
         <h1 className="text-5xl font-bold mt-4 mb-4">{movie.title}</h1>
 
