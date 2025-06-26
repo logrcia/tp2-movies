@@ -3,12 +3,19 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import MovieDetails from "./MovieDetails"
 import Link from "next/link"
+import Image from "next/image"
 import { useAppContext } from "@/app/contexts/AppContext";
 
-const MovieContainer = ({id}) => {
+const MovieContainer = ({id, title, image}) => {
 
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500"
   const [movie, setMovie] = useState({}) //uso llaves xq movie es un objeto, no un array
-const {handleAddToFavorites} = useAppContext()
+  const {handleAddToFavorites} = useAppContext()
+  const [isFavorite, setIsFavorite] = useState(false)
+  const toggleFavorite = () => {
+    handleAddToFavorites (title, image, id)
+    setIsFavorite(!isFavorite)
+  }
   useEffect(() => {
     const getData = async () => {
       try{
@@ -35,21 +42,17 @@ const {handleAddToFavorites} = useAppContext()
 
       <div className="absolute inset-0 bg-gradient-to-r from-stone-950 to-transparent h-full"></div>
 
-      <div className="relative z-10 p-10 text-white h-full">
-
-        <Link href={"/"} className="p-4 bg-stone-50 text-stone-950 font-bold rounded-2xl">Back to home</Link>
+    <div className="flex">
+      <div className="relative z-10 p-10 flex flex-row text-white h-full w-[100%] justify-between">
+        <div>
       
-      <button className="cursor-pointer"
-      onClick={() => { 
-        handleAddToFavorites(movie.title, movie.image, movie.id)}}
-      >Add to favorites</button>
 
         <p className="text-base font-normal mt-[80px]">{formattedDate}</p>
         <h1 className="text-5xl font-bold mt-4 mb-4">{movie.title}</h1>
 
         <p className="mt-2 mb-2 max-w-xl">{movie.overview}</p>
 
-        <p className="mt-4 mb-4">genre</p>
+        <p className="mt-4 mb-4">{String(movie.runtime)[0]}h {String(movie.runtime).slice(1)}min</p>
 
         <div className="mb-16 flex items-center">
           <p className="text-2xl mr-1.5"><span className="text-orange-400 ">★</span> {movie.vote_average}</p>
@@ -57,10 +60,27 @@ const {handleAddToFavorites} = useAppContext()
         </div>
 
         <MovieDetails movie={movie} />
-        
-        
+         </div>
+      
+      <div>
+        <Image
+        className="relative z-10"
+        src={`${imageBaseUrl}${movie.poster_path}`}
+        width={400}
+        height={650}
+        alt={title}/>
       </div>
-
+      </div>
+      <button className="absolute top-2 right-2 z-10 bg-blue-950 p-2 rounded-full cursor-pointer"
+        onClick={toggleFavorite}>
+          <Image
+            src={isFavorite ? "/assets/favorite-full.svg" : "/assets/favorite-null.svg"}
+            alt="Add to favorites"
+            width={36}
+            height={36}
+          />
+        </button>
+    </div>
     </div>
   )
 }

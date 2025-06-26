@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link"
 import { useState } from "react"
 const Hero = ({movies}) => {
     const bkg = movies[0].backdrop_path
@@ -15,7 +16,7 @@ const Hero = ({movies}) => {
         <p className="max-w-[500px]">{featuredMovie.overview}</p>
     </div>
     <div className="flex flex-row">
-      <div className="mr-5 px-8 py-4 rounded-3xl bg-neutral-200 font-bold text-stone-950 ">More Info</div>
+      <Link href={`/movie/${featuredMovie.id}`} className="mr-5 px-8 py-4 rounded-3xl bg-neutral-200 font-bold text-stone-950 " >More Info</Link>
       <div className="px-8 py-4 rounded-3xl border border-neutral-200 text-neutral-200 font-normal">Watch Trailer</div>
     </div>
    </section>

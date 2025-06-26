@@ -13,8 +13,15 @@ export const AppContextProvider = ({children}) => {
   },[favorites])
 
   const handleAddToFavorites = (title, image, id) => {
-    setFavorites([...favorites, {title, image, id}])
-  }
+    //el .some verifica si al menos un elemento cumple una condición, devuelve true o false
+    const isFavorite = favorites.some(movie => movie.id === id)
+    if(isFavorite){
+      //prev es el estado actual de favorites en el momento de actualizarlo
+      setFavorites(currentFavorites => currentFavorites.filter(movie => movie.id !== id))
+    }else{
+      setFavorites(currentFavorites => [...currentFavorites, { title, image, id }])
+    }
+  };
 
   const favoritesQty = () => favorites.length
 

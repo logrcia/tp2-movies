@@ -1,12 +1,13 @@
 'use client'
 import { useAppContext } from "@/app/contexts/AppContext"
+import FavoriteCard from "./FavoriteCard"
 
 const FavoritesContainer = () => {
     const{favorites} = useAppContext()
   return (
-    <div>
+    <div className="flex flex-row overflow-x-auto gap-6">
         {favorites.map((movie)=><div key={movie.id}>
-            <h2>{movie.title}</h2>
+            <FavoriteCard movie={movie}/>
         </div>)}
     </div>
   )
