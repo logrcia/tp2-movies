@@ -6,7 +6,7 @@ import Image from "next/image"
 const Navbar = () => {
   const {favoritesQty} = useAppContext()
   return (
-    <div className="flex justify-between items-center p-10 px-6 bg-blue-950 text-white font-bold text-2xl ">
+    <div className="flex justify-between items-center p-10 px-6 bg-blue-950 text-white font-bold text-xl ">
         
         <Image src="/assets/logo-movie.png"
         width={48}

@@ -2,19 +2,19 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import MovieDetails from "./MovieDetails"
-import Link from "next/link"
 import Image from "next/image"
 import { useAppContext } from "@/app/contexts/AppContext";
 
-const MovieContainer = ({id, title, image}) => {
+const MovieContainer = ({id}) => {
 
+  
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500"
   const [movie, setMovie] = useState({}) //uso llaves xq movie es un objeto, no un array
-  const {handleAddToFavorites} = useAppContext()
-  const [isFavorite, setIsFavorite] = useState(false)
+  const {handleAddToFavorites, favorites} = useAppContext()
+  const isFavorite = favorites.some(favMovie => favMovie.id === id)
+  
   const toggleFavorite = () => {
-    handleAddToFavorites (title, image, id)
-    setIsFavorite(!isFavorite)
+    handleAddToFavorites (movie.title, movie.poster_path, id)
   }
   useEffect(() => {
     const getData = async () => {
@@ -38,7 +38,7 @@ const MovieContainer = ({id, title, image}) => {
 
   return (
     <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`}}
-      className=" relative bg-no-repeat bg-center bg-cover h[900px]">
+      className=" relative bg-no-repeat bg-center bg-cover h-[900px]">
 
       <div className="absolute inset-0 bg-gradient-to-r from-stone-950 to-transparent h-full"></div>
 
@@ -62,14 +62,7 @@ const MovieContainer = ({id, title, image}) => {
         <MovieDetails movie={movie} />
          </div>
       
-      <div>
-        <Image
-        className="relative z-10"
-        src={`${imageBaseUrl}${movie.poster_path}`}
-        width={400}
-        height={650}
-        alt={title}/>
-      </div>
+     
       </div>
       <button className="absolute top-2 right-2 z-10 bg-blue-950 p-2 rounded-full cursor-pointer"
         onClick={toggleFavorite}>

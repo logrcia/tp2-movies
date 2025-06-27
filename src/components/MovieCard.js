@@ -6,7 +6,7 @@ import { useAppContext } from "@/app/contexts/AppContext";
 const MovieCard = ({title, image, id, date, rating}) => {
   const {handleAddToFavorites, favorites} = useAppContext()
 
-  const isFavorite = favorites.some(fav => fav.id === id)
+  const isFavorite = favorites.some(fav => fav.id == id)
   const toggleFavorite = () => {
     handleAddToFavorites (title, image, id)
   }
